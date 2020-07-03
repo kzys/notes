@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>links.8-p.info</title>
+</head>
+<body>
+{% for page in section.pages %}
+<li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
+{% endfor %}
+</body>
