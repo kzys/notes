@@ -21,3 +21,11 @@ Tinkering from JavaScript to [a split Bluetooth keyboard with custom firmware](h
 ### [youkoseki.com](https://youkoseki.com/) [ja]
 
 Good [fictions](https://youkoseki.com/text/) and [non-fictions](https://youkoseki.com/f/).
+
+### [豪鬼メモ](https://mikio.hatenablog.com/) [ja]
+
+He was the author of Kyoto Cabinet, Tokyo Cabinet, QDBM and Hyper Estraier. He is now working on a new DBM library, Tkrzw.
+
+### [山形浩生の「経済のトリセツ」](https://cruel.hatenablog.com/) [ja]
+
+Hiroo Yamagata is a translator, critic and researcher. He translates Thomas Piketty's "Capital in the Twenty-First Century", Lawrence Lessig's CODE and Eric S. Raymond's "The Cathedral and the Bazaar". Yes, all of them have the same translator in Japan.
