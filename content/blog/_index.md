@@ -14,6 +14,14 @@ Lin Clark is another blogger who explains things with cartoons. She is more fron
 
 Introducing interesting Computer Science papers almost everyday.
 
+### [Marc Brooker's Blog](https://brooker.co.za/blog/)
+
+Every developer in AWS knows Marc Brooker.
+
+### [The Observation Deck](http://dtrace.org/blogs/bmc/)
+
+Bryan Cantrill is starting [Oxide Computer Company](https://oxide.computer/). Before he was Joyent's CTO and former Sun Microsystems employee, where he developed DTrace.
+
 ### [氾濫原](https://lowreal.net/) [ja]
 
 Tinkering from JavaScript to [a split Bluetooth keyboard with custom firmware](https://lowreal.net/2016/08/30/2).
