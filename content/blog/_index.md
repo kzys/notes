@@ -1,5 +1,6 @@
 +++
 title = "Blog / Personal Website"
+weight = 1
 +++
 
 ### [Julia Evans](https://jvns.ca/)
