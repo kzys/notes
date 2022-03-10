@@ -1,0 +1,11 @@
+[build]
+publish = 'html'
+
+[build.environment]
+PYTHON_VERSION = "3.8"
+
+[context.production]
+command = 'make'
+
+[context.deploy-preview]
+command = 'make'
