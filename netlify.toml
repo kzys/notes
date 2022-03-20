@@ -1,0 +1,8 @@
+[build]
+publish = 'build'
+
+[context.production]
+command = 'make'
+
+[context.deploy-preview]
+command = 'make'
