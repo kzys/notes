@@ -1,2 +1,2 @@
 all:
-	bundle exec ruby gen.rb
+	cd system && bundle exec ruby gen.rb ..

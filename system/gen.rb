@@ -1,6 +1,8 @@
 require 'kramdown'
 require 'fileutils'
 
+Dir.chdir(ARGV.shift)
+
 FileUtils.mkdir_p('build')
 
 Dir.glob('*.md') do |path|
