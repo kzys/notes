@@ -40,7 +40,7 @@ Dir.chdir(ARGV.shift)
 
 FileUtils.mkdir_p('build')
 
-pages = Dir.glob('*.md').map do |md|
+pages = Dir.glob('*.md').sort.map do |md|
     Page.new(md)
 end
 
