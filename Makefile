@@ -1,2 +1,3 @@
 all:
-	cd system && bundle install && bundle exec ruby gen.rb ..
+	cd system && cargo build
+	./system/target/debug/system
