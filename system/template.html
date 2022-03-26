@@ -20,9 +20,14 @@
 
 <body>
     <main>
-        {{{ main }}}
+        {{{ page.html }}}
     </main>
     <footer>
+        <ul>
+            {{#each pages}}
+            <li><a href={{html_path}}>{{title}}</a></li>
+            {{/each}}
+        </ul>
     </footer>
 </body>
 
