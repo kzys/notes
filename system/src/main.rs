@@ -4,7 +4,6 @@ use itertools::Itertools;
 use pulldown_cmark::{html, Event, HeadingLevel::H1, Parser, Tag};
 use serde::Serialize;
 use serde_json::value;
-use std::error;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::Command;
@@ -56,7 +55,7 @@ fn find_title<'a>(it: impl Iterator<Item = Event<'a>>) -> Option<String> {
     title
 }
 
-fn find_files(from: &Path, ext: &str) -> Result<Vec<PathBuf>, Box<dyn std::error::Error>> {
+fn find_files(from: &Path, ext: &str) -> hack::Result<Vec<PathBuf>> {
     let mut result: Vec<PathBuf> = vec![];
     let paths = fs::read_dir(from)?;
     for path in paths {
@@ -83,7 +82,7 @@ fn find_files(from: &Path, ext: &str) -> Result<Vec<PathBuf>, Box<dyn std::error
 fn collect_pages(
     dir: &str,
     files: &std::collections::HashMap<String, Vec<u64>>,
-) -> Result<Vec<Page>, Box<dyn std::error::Error>> {
+) -> hack::Result<Vec<Page>> {
     let dir = Path::new(dir);
     let paths = find_files(dir, "md")?;
     let mut pages = Vec::new();
@@ -162,7 +161,7 @@ fn git_log() -> hack::Result<std::collections::HashMap<String, Vec<u64>>> {
     Ok(files)
 }
 
-fn main() -> Result<(), Box<dyn error::Error>> {
+fn main() -> hack::Result<()> {
     let mut reg = Handlebars::new();
     let tp = fs::read_to_string("system/template.html")?;
     reg.register_template_string("tp", tp)?;
