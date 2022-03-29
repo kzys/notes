@@ -12,6 +12,20 @@
             max-width: 50rem;
             line-height: 1.5;
         }
+
+        footer {
+            margin: 1rem;
+            line-height: 1.5;
+        }
+
+        th {
+            text-align: left;
+            border-bottom: 1px solid #000;
+        }
+
+        td.number {
+            text-align: right;
+        }
     </style>
     <title>
         {{ title }}
@@ -23,11 +37,18 @@
         {{{ page.html }}}
     </main>
     <footer>
-        <ul>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Size [bytes]</th>
+            </tr>
             {{#each pages}}
-            <li><a href={{html_path}}>{{title}}</a></li>
+            <tr>
+                <td><a href={{html_path}}>{{title}}</a></td>
+                <td class="number">{{size}}</td>
+            </tr>
             {{/each}}
-        </ul>
+        </table>
     </footer>
 </body>
 

@@ -11,6 +11,7 @@ struct Page {
     title: Option<String>,
     html: String,
     html_path: String,
+    size: u64,
 }
 
 fn find_title<'a>(it: impl Iterator<Item = Event<'a>>) -> Option<String> {
@@ -64,10 +65,13 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         let mut html = String::new();
         html::push_html(&mut html, it2);
 
+        let size = fs::metadata(path.path())?.len();
+
         pages.push(Page {
             title,
             html,
             html_path: html_path.to_string(),
+            size,
         });
     }
 
@@ -83,6 +87,7 @@ fn main() -> Result<(), Box<dyn error::Error>> {
             "title".to_string(),
             to_json(page.title.as_ref().or(Some(&"Untitled".to_string()))),
         );
+        data.insert("size".to_string(), to_json(page.size));
         data.insert("page".to_string(), to_json(&page));
 
         if page.html_path == "index.html" {
