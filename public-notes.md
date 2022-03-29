@@ -1,6 +1,8 @@
-# Personal notes / wikis
+# Personal notes / wikis / gardens
 
 * [Andyʼs working notes](https://notes.andymatuschak.org/About_these_notes)
+* [Maggie Appleton](https://maggieappleton.com/)
+* [Gwern.net](https://www.gwern.net/)
 
 ## Japanese
 
