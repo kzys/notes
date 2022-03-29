@@ -2,9 +2,11 @@ use handlebars::{to_json, Handlebars};
 use itertools::Itertools;
 use pulldown_cmark::{html, Event, HeadingLevel::H1, Parser, Tag};
 use serde::Serialize;
-use serde_json::value::{self, Map, Value as Json};
+use serde_json::value;
 use std::error;
 use std::fs;
+use std::process::Command;
+use std::str::FromStr;
 
 #[derive(Serialize)]
 struct Page {
@@ -12,6 +14,7 @@ struct Page {
     html: String,
     html_path: String,
     size: u64,
+    changes: Vec<u64>,
 }
 
 fn find_title<'a>(it: impl Iterator<Item = Event<'a>>) -> Option<String> {
@@ -36,6 +39,28 @@ fn main() -> Result<(), Box<dyn error::Error>> {
     reg.register_template_string("tp", tp)?;
 
     fs::create_dir_all("build")?;
+
+    let git_log = Command::new("git")
+        .args(["log", "--format=format:commit\t%H\t%ct", "--numstat"])
+        .output();
+    let stdout_vec = git_log?.stdout;
+    let stdout = std::str::from_utf8(&stdout_vec)?;
+    let lines = stdout.split("\n");
+
+    let mut files = std::collections::HashMap::<String, Vec<u64>>::new();
+
+    let mut dt: Option<u64> = None;
+    for line in lines {
+        let columns: Vec<&str> = line.split("\t").collect();
+        if columns.len() > 2 && columns[0] == "commit" {
+            dt = Some(u64::from_str(columns[2])?);
+        } else if columns.len() > 2 {
+            let key = columns[2].to_string();
+            files.entry(key).or_insert(vec![]).push(dt.unwrap());
+        } else {
+            dt = None;
+        }
+    }
 
     let paths = fs::read_dir(".")?;
     let mut pages = Vec::new();
@@ -66,12 +91,17 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         html::push_html(&mut html, it2);
 
         let size = fs::metadata(path.path())?.len();
+        let empty = vec![];
+        let changes = files
+            .get(&path.file_name().to_string_lossy().to_string())
+            .unwrap_or(&empty);
 
         pages.push(Page {
             title,
             html,
             html_path: html_path.to_string(),
             size,
+            changes: changes.to_vec(),
         });
     }
 
@@ -82,13 +112,14 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         .collect();
 
     for page in &pages {
-        let mut data = Map::new();
+        let mut data = value::Map::new();
         data.insert(
             "title".to_string(),
             to_json(page.title.as_ref().or(Some(&"Untitled".to_string()))),
         );
         data.insert("size".to_string(), to_json(page.size));
         data.insert("page".to_string(), to_json(&page));
+        data.insert("changes".to_string(), to_json(&page.changes));
 
         if page.html_path == "index.html" {
             data.insert("pages".to_string(), to_json(&toc));
