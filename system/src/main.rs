@@ -187,8 +187,7 @@ fn main() -> hack::Result<()> {
             data.insert("pages".to_string(), to_json(&toc));
         }
 
-        let s = format!("build/{}", page.html_path);
-        let dest = std::path::Path::new(&s);
+        let dest = Path::new("build").join(&page.html_path);
         if let Some(p) = dest.parent() {
             fs::create_dir_all(p)?;
         }
