@@ -10,6 +10,8 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::str::FromStr;
 
+mod hack;
+
 #[derive(Serialize)]
 struct Page {
     title: String,
@@ -130,13 +132,7 @@ fn collect_pages(
     Ok(pages)
 }
 
-fn main() -> Result<(), Box<dyn error::Error>> {
-    let mut reg = Handlebars::new();
-    let tp = fs::read_to_string("system/template.html")?;
-    reg.register_template_string("tp", tp)?;
-
-    fs::create_dir_all("build")?;
-
+fn git_log() -> hack::Result<std::collections::HashMap<String, Vec<u64>>> {
     let git_log = Command::new("git")
         .args(["log", "--format=format:commit\t%H\t%ct", "--numstat"])
         .output();
@@ -163,6 +159,17 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         }
     }
 
+    Ok(files)
+}
+
+fn main() -> Result<(), Box<dyn error::Error>> {
+    let mut reg = Handlebars::new();
+    let tp = fs::read_to_string("system/template.html")?;
+    reg.register_template_string("tp", tp)?;
+
+    fs::create_dir_all("build")?;
+
+    let files = git_log()?;
     let pages: Vec<Page> = collect_pages(".", &files)?;
 
     let toc: Vec<&Page> = pages
