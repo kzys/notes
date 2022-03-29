@@ -26,6 +26,10 @@
         td.number {
             text-align: right;
         }
+
+        td {
+            padding-right: 1rem;
+        }
     </style>
     <title>
         {{ title }}
@@ -42,12 +46,15 @@
             <tr>
                 <th>Title</th>
                 <th>Size [bytes]</th>
+                <th>Created</th>
+                <th>Last Modified</th>
             </tr>
             {{#each pages}}
             <tr>
                 <td><a href={{html_path}}>{{title}}</a></td>
                 <td class="number">{{size}}</td>
-                <td>{{changes}}</td>
+                <td>{{created_at}}</td>
+                <td>{{last_modified_at}}</td>
             </tr>
             {{/each}}
         </table>

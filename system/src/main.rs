@@ -1,3 +1,4 @@
+use chrono::prelude::*;
 use handlebars::{to_json, Handlebars};
 use itertools::Itertools;
 use pulldown_cmark::{html, Event, HeadingLevel::H1, Parser, Tag};
@@ -15,6 +16,17 @@ struct Page {
     html_path: String,
     size: u64,
     changes: Vec<u64>,
+    created_at: Option<String>,
+    last_modified_at: Option<String>,
+}
+
+impl Page {
+    fn created_at(&self) -> DateTime<Utc> {
+        Utc.timestamp(self.changes[self.changes.len() - 1] as i64, 0)
+    }
+    fn last_modified_at(&self) -> DateTime<Utc> {
+        Utc.timestamp(self.changes[0] as i64, 0)
+    }
 }
 
 fn find_title<'a>(it: impl Iterator<Item = Event<'a>>) -> Option<String> {
@@ -96,13 +108,18 @@ fn main() -> Result<(), Box<dyn error::Error>> {
             .get(&path.file_name().to_string_lossy().to_string())
             .unwrap_or(&empty);
 
-        pages.push(Page {
+        let mut p = Page {
             title,
             html,
             html_path: html_path.to_string(),
             size,
             changes: changes.to_vec(),
-        });
+            created_at: None,
+            last_modified_at: None,
+        };
+        p.created_at = Some(p.created_at().to_string());
+        p.last_modified_at = Some(p.last_modified_at().to_string());
+        pages.push(p);
     }
 
     let toc: Vec<&Page> = pages
@@ -119,7 +136,10 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         );
         data.insert("size".to_string(), to_json(page.size));
         data.insert("page".to_string(), to_json(&page));
-        data.insert("changes".to_string(), to_json(&page.changes));
+        data.insert(
+            "last_modified_at".to_string(),
+            to_json(page.last_modified_at().to_string()),
+        );
 
         if page.html_path == "index.html" {
             data.insert("pages".to_string(), to_json(&toc));
