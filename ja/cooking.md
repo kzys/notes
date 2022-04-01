@@ -8,3 +8,6 @@
 
 塩 + オリーブオイル + ベーコンでだいぶ味が出るので、コンソメは入れなくても大丈夫。
 
+## [白身魚フライ](https://www.philips.co.jp/c-m-ho/philips-chef/recipe-overview-page/nonfryer-recipe/049)
+
+鮭で作ることが多い。エアフライヤーは便利。
