@@ -162,11 +162,16 @@ fn git_log() -> hack::Result<std::collections::HashMap<String, Vec<u64>>> {
 }
 
 fn main() -> hack::Result<()> {
+    let css_name = "main.css";
+
     let mut reg = Handlebars::new();
     let tp = fs::read_to_string("system/template.html")?;
     reg.register_template_string("tp", tp)?;
 
-    fs::create_dir_all("build")?;
+    let build_dir = Path::new("build");
+
+    fs::create_dir_all(build_dir)?;
+    fs::copy("system/main.css", build_dir.join(css_name))?;
 
     let files = git_log()?;
     let pages: Vec<Page> = collect_pages(".", &files)?;
@@ -187,10 +192,15 @@ fn main() -> hack::Result<()> {
             data.insert("pages".to_string(), to_json(&toc));
         }
 
-        let dest = Path::new("build").join(&page.html_path);
+        let mut css_path = "".to_string();
+        let dest = build_dir.join(&page.html_path);
         if let Some(p) = dest.parent() {
             fs::create_dir_all(p)?;
+            css_path += &"../".repeat(p.components().count() - 1);
         }
+        css_path += "main.css";
+        data.insert("css_path".to_string(), to_json(css_path));
+
         let f = fs::File::create(dest)?;
         reg.render_to_write("tp", &data, f)?;
     }

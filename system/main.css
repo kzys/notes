@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    padding: 0 1rem;
+
+    font-family: sans-serif;
+    line-height: 1.5;
+
+    background: #fff;
+    color: #333;
+}
+
+a {
+    color: #009;
+}
+
+a:visited {
+    color: #909;
+}
+
+a:hover {
+    background: #eee;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    margin: 1rem 0;
+}
+
+th {
+    background: #eee;
+    padding: 0.5rem;
+}
+
+td {
+    border: 1px solid #ccc;
+    border-width: 0 1px;
+    padding: 0 0.5rem;
+}
