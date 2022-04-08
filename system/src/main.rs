@@ -9,11 +9,13 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::str::FromStr;
 
+mod excerpt;
 mod hack;
 
 #[derive(Serialize)]
 struct Page {
     title: String,
+    first_paragraph: String,
     html: String,
     html_path: String,
     size: u64,
@@ -37,22 +39,6 @@ impl Page {
             Some(Utc.timestamp(self.changes[0] as i64, 0))
         }
     }
-}
-
-fn find_title<'a>(it: impl Iterator<Item = Event<'a>>) -> Option<String> {
-    let mut heading = false;
-    let mut title = None;
-    it.for_each(|ev| match ev {
-        Event::Start(Tag::Heading(H1, _, _)) => heading = true,
-        Event::End(Tag::Heading(H1, _, _)) => heading = false,
-        Event::Text(text) => {
-            if heading {
-                title = Some(text.to_string())
-            }
-        }
-        _ => {}
-    });
-    title
 }
 
 fn find_files(from: &Path, ext: &str) -> hack::Result<Vec<PathBuf>> {
@@ -105,7 +91,7 @@ fn collect_pages(
         let parser = Parser::new(&content);
 
         let (it1, it2) = parser.tee();
-        let title = find_title(it1);
+        let excerpt = excerpt::find_excerpt(it1);
 
         let mut html = String::new();
         html::push_html(&mut html, it2);
@@ -115,8 +101,12 @@ fn collect_pages(
         let k = path.to_str().unwrap().to_string();
         let changes = files.get(&k).unwrap_or(&empty);
 
+        let untitled = "???".to_string();
+        let title = excerpt.title.unwrap_or(untitled.clone());
+        let first_paragraph = excerpt.first_paragraph;
         let mut p = Page {
-            title: title.unwrap_or_else(|| path.to_str().unwrap().to_string().clone()),
+            title: title.to_string(),
+            first_paragraph: first_paragraph.to_string(),
             html,
             html_path: html_path.to_string_lossy().to_string(),
             size,

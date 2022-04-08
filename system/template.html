@@ -23,7 +23,10 @@
             </tr>
             {{#each pages}}
             <tr>
-                <td><a href={{html_path}}>{{title}}</a></td>
+                <td class="excerpt">
+                    <a href={{html_path}}>{{title}}</a>
+                    <p>{{ first_paragraph }}</p>
+                </td>
                 <td class="number">{{size}}</td>
                 <td>{{created_at}}</td>
                 <td>{{last_modified_at}}</td>
