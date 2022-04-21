@@ -41,3 +41,18 @@ td {
 td.excerpt p {
     font-size: 90%;
 }
+
+footer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+div.card {
+    width: 20rem;
+    margin: 0 2rem 1rem 0;
+}
+
+.meta {
+    font-size: 90%;
+    color: #666;
+}

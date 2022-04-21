@@ -114,8 +114,10 @@ fn collect_pages(
             created_at: None,
             last_modified_at: None,
         };
-        p.created_at = p.created_at().map(|x| x.to_string());
-        p.last_modified_at = p.last_modified_at().map(|x| x.to_string());
+        p.created_at = p.created_at().map(|x| x.format("%Y/%m/%d").to_string());
+        p.last_modified_at = p
+            .last_modified_at()
+            .map(|x| x.format("%Y/%m/%d").to_string());
         pages.push(p);
     }
     Ok(pages)
