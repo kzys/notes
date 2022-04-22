@@ -1,3 +1,3 @@
-# 90's GUI is the best
+# 90's GUI may be the best
 
 https://serenityos.org/
