@@ -11,3 +11,7 @@
 ## [白身魚フライ](https://www.philips.co.jp/c-m-ho/philips-chef/recipe-overview-page/nonfryer-recipe/049)
 
 鮭で作ることが多い。エアフライヤーは便利。
+
+## [包丁いらず♪ コクうまツナマヨパスタ](https://delishkitchen.tv/recipes/155847074150089196)
+
+オリーブオイル漬けのツナなら油は切らなくてもいい。牛乳もないときはなしでいい。コーンもなしで作ることが多い。
