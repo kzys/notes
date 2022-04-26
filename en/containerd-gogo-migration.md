@@ -3,7 +3,6 @@
 containerd has migrated from
 [github.com/gogo/protobuf](https://github.com/gogo/protobuf/) to
 [google.golang.org/protobuf](https://github.com/protocolbuffers/protobuf-go) in April 2022.
-
 This document describes the effort.
 
 ## Background
@@ -21,16 +20,20 @@ However, the maintainers of gogo/protobuf decided to step down and the project i
 
 containerd is using [Protobuild](https://github.com/containerd/protobuild) that wraps protoc-gen-go. Previously protoc-gen-go supported gRPC through its "plugin" mechanism, but the recent versions of protoc-gen-go don't (TODO: when?). Now protoc-gen-go is only responsible for Protocol Buffers, and gRPC needs protoc-gen-go-grpc.
 
-I extended Protobuild to support multiple generators.
+Supporting multiple generators was lacking in Protobuild. I extended Protobuild to support protoc-gen-go and protoc-gen-go-grpc.
 
 - [Support multiple generators](https://github.com/containerd/protobuild/pull/45)
 - [Remove plugins and import_path](https://github.com/containerd/protobuild/pull/48)
+
+In addition to that, protoc-gen-go doesn't allow much customization compared to gogo/protobuf. I had to write a small utility program that rewrites Go's AST.
+
+- [Add go-fix-acronym](https://github.com/containerd/protobuild/pull/50)
 
 ## ttrpc
 
 ttrpc is containerd's own RPC protocol, which is basically "gRPC without HTTP".
 
-I have removed gogo/protobuf from ttrpc, and written a new code generator that works more like protoc-gen-go-grpc.
+I have removed gogo/protobuf from ttrpc, and written a new code generator that could be used with protoc-gen-go.
 
 - [Use google.golang.org/protobuf instead of github.com/gogo/protobuf](https://github.com/containerd/ttrpc/pull/99)
 - [Add protoc-gen-go-ttrpc](https://github.com/containerd/ttrpc/pull/96)
@@ -54,3 +57,14 @@ Because of the PRs above, the size of the final migration PR was manageable (TOD
 containerd is depending on containerd/imgcrypt and imgcrypt is depending on containerd. In order to workaround the cyclic dependencies, I had to use Go's reflect package.
 
 - [Use reflect to support diff.ApplyConfig with/without gogo's types.Any](https://github.com/containerd/imgcrypt/pull/75)
+
+## Retrospective
+
+### Went Well
+
+- Submitted small incremental PRs instead of having a big one.
+
+### Needs Improvements
+
+- It wasn't really estimated and I haven't discussed much about the work much inside Amazon.
+- Possibly due to that, I wasn't asking much help except for code reviews, inside/outside Amazon.
