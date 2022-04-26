@@ -7,14 +7,16 @@ This document describes the effort.
 
 ## Background
 
-containerd has been using gogo/protobuf since the very beginning (TODO: when?). While I wasn't involving the original decision, using gogo/protobuf seemed popular at that time. For example, the following project are/were using gogo/protobuf and only 2/4 are migrated.
+containerd has been using gogo/protobuf since the very beginning (TODO: when?). While I wasn't involving the original decision, using gogo/protobuf seemed popular at that time. For example, the following project are/were using gogo/protobuf;
 
 - [Vitess](https://github.com/vitessio/vitess) ([migrating off in 2021](https://vitess.io/blog/2021-06-03-a-new-protobuf-generator-for-go/))
 - [Istio](https://github.com/istio/istio) ([migrating off in 2022](https://github.com/istio/istio/pull/38055))
 - [etcd](https://github.com/etcd-io/etcd)
 - [CockroachDB](https://github.com/cockroachdb/cockroach)
 
-However, the maintainers of gogo/protobuf decided to step down and the project is [looking for new maintainers since May 2020](https://github.com/gogo/protobuf/issues/691).
+Compared to Google's original Go Protocol Buffers package, gogo/protobuf was much performant and allowed more customization regarding code generation.
+
+However, the maintainers of gogo/protobuf decided to step down and the project is [looking for new maintainers since May 2020](https://github.com/gogo/protobuf/issues/691). While taking the ownership was technically possible, maintaining the RPC package was not really containerd's focus, so we (I?) decided to migrate off from gogo/protobuf.
 
 ## Protobuild
 
