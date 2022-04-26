@@ -8,7 +8,7 @@ printf デバッグや、デバッガでステップ実行して動作を確認�
 
 ## 単体テスト (ユニットテスト) と結合テスト (インテグレーションテスト) のちがいは何ですか?
 
-Rails のようなフレームワークが提供する区分や、チームや会社のなかでの合意はありますが、業界全体を通して「なにが単体テストで、なにが結合テストか」という問題についての合意はありません。これは日本に限ったことではなく、例えば Google Testing Blog の [Test Sizes](https://testing.googleblog.com/2010/12/test-sizes.html）(2010) にも
+Rails のようなフレームワークが提供する区分や、チームや会社のなかでの合意はありますが、業界全体を通して「なにが単体テストで、なにが結合テストか」という問題についての合意はありません。これは日本に限ったことではなく、例えば Google Testing Blog の [Test Sizes](https://testing.googleblog.com/2010/12/test-sizes.html) (2010) にも
 
 > What do you call a test that tests your application through its UI? An end-to-end test? A functional test? A system test? A selenium test? I’ve heard all them, and more. I reckon you have too. Tests running against less of the stack? The same equally frustrating inconsistency. Just what, exactly, is an integration test? A unit test? How do we name these things?
 
