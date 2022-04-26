@@ -52,7 +52,8 @@ div.card {
     margin: 0 2rem 1rem 0;
 }
 
-.meta {
-    font-size: 90%;
-    color: #666;
+header {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
 }

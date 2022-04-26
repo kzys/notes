@@ -4,11 +4,15 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="{{ css_path }}" />
     <title>
-        {{ title }}
+        {{ page.title }}
     </title>
 </head>
 
 <body>
+    <header>
+        <div class="mtime">Updated at {{ page.last_modified_at }}</div>
+        <div class="ctime">Created at {{ page.created_at }}</div>
+    </header>
     <main>
         {{{ page.html }}}
     </main>
