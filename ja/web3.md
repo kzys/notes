@@ -70,7 +70,7 @@
 
 ### 〈NFTアート〉への共同ステートメント
 
-https://nft-art-statement.github.io/
+<https://nft-art-statement.github.io/>
 
 > 〈NFTアート〉：作品に紐付いたNFTが発行されるという共通点だけを除き、簡潔には定義できない多様な活動です。このステートメントに署名する人々により、集合的に定義されます。
 
