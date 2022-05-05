@@ -18,10 +18,9 @@ The comment was [once linked from Wikipedia](https://en.wikipedia.org/w/index.ph
 
  ## Windows
 
- From [Go](https://github.com/golang/go/blob/go1.18.1/src/cmd/go/internal/test/test.go#L1058-L1063);
+ From [Go](https://github.com/golang/go/blob/go1.18.1/src/cmd/go/internal/test/test.go#L1059-L1080);
 
  ```go
-	if cfg.Goos == "windows" {
 		// There are many reserved words on Windows that,
 		// if used in the name of an executable, cause Windows
 		// to try to ask for extra permissions.
