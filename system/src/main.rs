@@ -1,7 +1,7 @@
 use chrono::prelude::*;
 use handlebars::{to_json, Handlebars};
 use itertools::Itertools;
-use pulldown_cmark::{html, Event, HeadingLevel::H1, Parser, Tag};
+use pulldown_cmark::{html, Parser};
 use serde::Serialize;
 use serde_json::value;
 use std::fs;
