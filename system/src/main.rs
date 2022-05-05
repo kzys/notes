@@ -73,18 +73,13 @@ fn collect_pages(
     let paths = find_files(dir, "md")?;
     let mut pages = Vec::new();
     for path in paths {
-        let converted_path = path.to_str().unwrap().replace(".md", ".html");
-
-        let p = if path.ends_with("README.md") {
-            "index.html"
-        } else {
-            &converted_path
-        };
+        let mut pb = path.clone();
+        pb.set_extension("html");
 
         let html_path = if dir.as_os_str() != "." {
-            PathBuf::from(p)
+            PathBuf::from(pb)
         } else {
-            dir.join(p)
+            dir.join(pb)
         };
 
         let content = fs::read_to_string(&path)?;
