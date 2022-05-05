@@ -1,4 +1,4 @@
-# Good comments
+# Good code comments
 
 Some are view/opinions. Some are amusing little facts about the implementations.
 
