@@ -1,4 +1,4 @@
-use pulldown_cmark::{html, Event, HeadingLevel::H1, Parser, Tag};
+use pulldown_cmark::{Event, HeadingLevel::H1, Tag};
 
 pub struct Excerpt {
     pub title: Option<String>,
