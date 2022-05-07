@@ -2,14 +2,20 @@ use chrono::prelude::*;
 use handlebars::{to_json, Handlebars};
 use itertools::Itertools;
 use pulldown_cmark::{html, Parser};
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use serde_json::value;
 use std::fs;
 use std::path::{Path, PathBuf};
+use serde_yaml;
 
 mod excerpt;
 mod hack;
 mod git;
+
+#[derive(Serialize, Deserialize, Debug)]
+struct FrontMatter {
+    draft: bool
+}
 
 #[derive(Serialize)]
 struct Page {
@@ -21,6 +27,7 @@ struct Page {
     changes: Vec<u64>,
     created_at: Option<String>,
     last_modified_at: Option<String>,
+    draft: bool,
 }
 
 impl Page {
@@ -83,7 +90,19 @@ fn collect_pages(
         };
 
         let content = fs::read_to_string(&path)?;
-        let parser = Parser::new(&content);
+        let (fm, md) = if content.starts_with("---") {
+                let sections: Vec<&str> = content.split("---").collect();
+                let fm: Result<FrontMatter, serde_yaml::Error> = serde_yaml::from_str(sections[1]);
+                (Some(fm), sections[2])
+        } else {
+            (None, content.as_str())
+        };
+        let draft = if let Some(Ok(fm)) = fm {
+            fm.draft
+        } else {
+            false
+        };
+        let parser = Parser::new(md);
 
         let (it1, it2) = parser.tee();
         let excerpt = excerpt::find_excerpt(it1);
@@ -108,6 +127,7 @@ fn collect_pages(
             changes: changes.to_vec(),
             created_at: None,
             last_modified_at: None,
+            draft,
         };
         p.created_at = p.created_at().map(|x| x.format("%Y/%m/%d").to_string());
         p.last_modified_at = p
@@ -141,6 +161,9 @@ fn main() -> hack::Result<()> {
         .collect();
 
     for page in &pages {
+        if page.draft {
+            continue;
+        }
         let mut data = value::Map::new();
         data.insert("title".to_string(), to_json(&page.title));
         data.insert("size".to_string(), to_json(page.size));
