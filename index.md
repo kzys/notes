@@ -1,4 +1,4 @@
-# thoughts.8-p.info
+# 🤔
 
 This is an attempt to write and collect notes.
 I was blogging for more than a decade.
