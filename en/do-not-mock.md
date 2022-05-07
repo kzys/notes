@@ -1,3 +1,6 @@
+---
+draft: true
+---
 # Don't mock dependencies
 
 In software testing, I believe mocking is a necessary evil. There are places where it works, but overall it is better to use real dependencies.

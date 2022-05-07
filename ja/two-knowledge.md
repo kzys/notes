@@ -1,3 +1,6 @@
+---
+draft: true
+---
 # ソフトウェア開発のふたつの知識
 
 Epistemic status: Still work in progress.
