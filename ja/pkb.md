@@ -1,3 +1,6 @@
+---
+draft: true
+---
 # Personal Knowledge Base
 
 ## Evernote

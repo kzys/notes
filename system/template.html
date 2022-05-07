@@ -16,10 +16,12 @@
     <main>
         {{{ page.html }}}
     </main>
-    <!--
     <footer>
         {{#if pages}}
         {{#each pages}}
+        {{#if draft}}
+        <!-- {{title}} -->
+        {{else}}
         <div class="card">
             <a class="title" href={{html_path}}>{{title}}</a>
             <div class="meta">
@@ -27,11 +29,11 @@
             </div>
             <p>{{ first_paragraph }}</p>
         </div>
+        {{/if}}
         {{/each}}
         </table>
         {{/if}}
     </footer>
-    -->
 </body>
 
 </html>

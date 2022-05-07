@@ -1,3 +1,6 @@
+---
+draft: true
+---
 # Make Time / 時間術大全
 
 <https://maketime.blog/>
