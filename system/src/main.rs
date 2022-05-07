@@ -29,14 +29,15 @@ impl Page {
         if self.changes.len() == 0 {
             None
         } else {
-            Some(Utc.timestamp(self.changes[self.changes.len() - 1] as i64, 0))
+            Some(Utc.timestamp(self.changes[0] as i64, 0))
         }
     }
     fn last_modified_at(&self) -> Option<DateTime<Utc>> {
         if self.changes.len() == 0 {
             None
         } else {
-            Some(Utc.timestamp(self.changes[0] as i64, 0))
+            let last = self.changes.len() - 1;
+            Some(Utc.timestamp(self.changes[last] as i64, 0))
         }
     }
 }
@@ -119,9 +120,13 @@ fn collect_pages(
 }
 
 fn git_log() -> hack::Result<std::collections::HashMap<String, Vec<u64>>> {
-    let git_log = Command::new("git")
-        .args(["log", "--format=format:commit\t%H\t%ct", "--numstat"])
-        .output();
+    let args = vec![
+        "log",
+        "--format=format:XX\t%H\t%ct",
+        "--name-status",
+        "--reverse",
+    ];
+    let git_log = Command::new("git").args(args).output();
     let stdout_vec = git_log?.stdout;
     let stdout = std::str::from_utf8(&stdout_vec)?;
     let lines = stdout.split("\n");
@@ -131,15 +136,16 @@ fn git_log() -> hack::Result<std::collections::HashMap<String, Vec<u64>>> {
     let mut dt: Option<u64> = None;
     for line in lines {
         let columns: Vec<&str> = line.split("\t").collect();
-        if columns.len() > 2 && columns[0] == "commit" {
+        if columns.len() > 2 && columns[0] == "XX" {
             dt = Some(u64::from_str(columns[2])?);
-        } else if columns.len() > 2 {
-            let mut key = columns[2].to_string();
-            let rename: Vec<&str> = key.split(" => ").collect();
-            if rename.len() == 2 {
-                key = rename[1].to_string();
-            }
-            files.entry(key).or_insert(vec![]).push(dt.unwrap());
+        } else if columns.len() == 2 {
+            let name = columns[1].to_string();
+            files.entry(name).or_insert(vec![]).push(dt.unwrap());
+        } else if columns.len() == 3 {
+            let from = columns[1].to_string();
+            let to = columns[2].to_string();
+            let past_commits = files.get(&from).unwrap_or(&vec![]).to_vec();
+            files.insert(to, past_commits);
         } else {
             dt = None;
         }
