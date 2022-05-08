@@ -11,8 +11,14 @@
 
 <body>
     <header>
-        <div class="mtime">Updated at {{ page.last_modified_at }}</div>
-        <div class="ctime">Created at {{ page.created_at }}</div>
+        <div class="mtime">
+            Last updated at
+            {{ page.last_modified_at }}
+        </div>
+        <div class="ctime">
+            Initially created at
+            {{ page.created_at }}
+        </div>
     </header>
     <main>
         {{{ page.html }}}
