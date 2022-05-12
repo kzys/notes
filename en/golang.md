@@ -14,6 +14,19 @@
 
 ### Go may be slow
 
+[Why did you create a new language?](https://go.dev/doc/faq#creating_a_new_language);
+
+> Finally, working with Go is intended to be fast: it should take at most a few seconds to build a large executable on a single computer. 
+
+[Why does Go perform badly on benchmark X?](https://go.dev/doc/faq#Why_does_Go_perform_badly_on_benchmark_x);
+
+> One of Go's design goals is to approach the performance of C for comparable programs, yet on some benchmarks it does quite poorly, including several in golang.org/x/exp/shootout. 
+>
+> ...
+> Still, there is room for improvement. The compilers are good but could be better, many libraries need major performance work, and the garbage collector isn't fast enough yet. (Even if it were, taking care not to generate unnecessary garbage can have a huge effect.) 
+
+[The Go compiler needs to be smarter](https://lemire.me/blog/2020/06/04/the-go-compiler-needs-to-be-smarter/) (2020) pointed out conservative inlining and the lack of runtime constant variables.
+
 - LLVM-backed compilers (rustc, clang), GCC and JVM are optimized for decades.
 - In addition to that, Go is okay to sacrifice its runtime perfomance to shorten the build time, which is different from other compilers.
 - Go's FFI is also slow.
