@@ -12,6 +12,12 @@
 
 ## Pitfalls
 
+### Go may be slow
+
+- LLVM-backed compilers (rustc, clang), GCC and JVM are optimized for decades.
+- In addition to that, Go is okay to sacrifice its runtime perfomance to shorten the build time, which is different from other compilers.
+- Go's FFI is also slow.
+
 ### Typed Nil
 
 * https://go.dev/doc/faq#nil_error
