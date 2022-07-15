@@ -1,6 +1,6 @@
 # Kindle
 
-I have too many Kindle devices.
+I have too many Kindle devices. Currently 4 and only one of them is broken.
 
 ## Kindle Paperwhite (11th Generation)
 
@@ -28,7 +28,7 @@ I broke this Kindle's screen when I was visiting Kyoto, contacted Amazon and got
 
 2012-
 
-Another Kindle from Amazon.com while I was in Tokyo.
+Another Kindle from Amazon.com while I was living in Tokyo.
 
 I still have this one, but the screen is now broken.
 
