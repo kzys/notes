@@ -1,6 +1,8 @@
 # Kindle
 
-I have too many Kindle devices. Currently 4 and only one of them is broken.
+I like Kindle. Having international free 3G was mind-blowing and showed me that customer experience is not just about hardware and software. It might be one of the reasons to work for Amazon, although I haven't worked in any Kindle teams though.
+
+That being said, I bought too many Kindle devices. Currently 4 and only one of them is broken.
 
 ## Kindle Paperwhite (11th Generation)
 
